@@ -1,7 +1,7 @@
 
 import subprocess
 
-updates = ["apt-get update","apt-get upgrade -y","apt-get dist-upgrade -y","apt-get clean","apt-get autoremove -y"]
+updates = ["dnf update","dnf upgrade -y","dnf dist-upgrade -y","dnf clean","dnf autoremove -y"]
 
 def update(lst):
 
