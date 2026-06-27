@@ -2,7 +2,7 @@ import os
 import sys
 
 log_dir = "/var/log/SysAdmin-Logs"
-log_file = ["updates.log", "intall.log"]
+log_files = ["updates.log", "intall.log"]
 
 
 def check_root():
@@ -46,3 +46,8 @@ def validate_file(path, files):
 
                         except Exception as e:
                                 print(f"An error has occured: {e}")
+
+
+check_root()
+validate_path(log_dir)
+validate_file(log_dir, log_files)
