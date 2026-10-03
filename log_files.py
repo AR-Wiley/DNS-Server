@@ -8,7 +8,7 @@ log_files = ["updates.log", "install.log", "users.log", "software.log"]
 def check_root():
 
         if os.getuid() != 0:
-                print("This sript must be run as root", file=sys.stderr)
+                print("This script must be run as root", file=sys.stderr)
                 sys.exit(1)
 
 
