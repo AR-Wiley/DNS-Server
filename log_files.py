@@ -2,7 +2,7 @@ import os
 import sys
 
 log_dir = "/var/log/SysAdmin-Logs"
-log_files = ["updates.log", "intall.log"]
+log_files = ["updates.log", "install.log", "users.log", "software.log"]
 
 
 def check_root():
@@ -33,7 +33,7 @@ def validate_file(path, files):
 
                 if not os.path.isfile(file_path):
                         print(f"Log file {i} does not exist")
-                        print(f("Creating file {i}")
+                        print(f"Creating file {i}")
 
                         try:
                                 with open(file_path, "x") as f:
