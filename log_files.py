@@ -4,16 +4,12 @@ import sys
 log_dir = "/var/log/SysAdmin-Logs"
 log_files = ["updates.log", "install.log", "users.log", "software.log"]
 
-
 def check_root():
-
         if os.getuid() != 0:
                 print("This script must be run as root", file=sys.stderr)
                 sys.exit(1)
 
-
 def validate_path(path):
-
         if not os.path.exists(path):
                 print("Path does not exist")
                 print("Creating path")
@@ -24,26 +20,18 @@ def validate_path(path):
                 except Exception as e:
                         print(f"An error has occured: {e}")
 
-
 def validate_file(path, files):
-
         for i in files:
-
                 file_path = os.path.join(path, i)
-
                 if not os.path.isfile(file_path):
                         print(f"Log file {i} does not exist")
                         print(f"Creating file {i}")
-
                         try:
                                 with open(file_path, "x") as f:
                                         f.write(f"{i} ceated")
-
                                 print(f"Created: {i}")
-
                         except FileExistsError:
                                 print(f"{i} already exits.")
-
                         except Exception as e:
                                 print(f"An error has occured: {e}")
 
