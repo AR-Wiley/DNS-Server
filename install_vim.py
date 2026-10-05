@@ -5,8 +5,10 @@ import subprocess
 from datetime import datetime
 
 log_path = "/var/log/SysAdmin-Logs"
-log_file = "software.log"
-file_path = os.path.join(log_path,log_file)
+software_log_file = "software.log"
+update_log_file = "update.log"
+software_path = os.path.join(log_path,software_log_file)
+update_path = os.path.join(log_path,update_log_file)
 updates = ["dnf update","dnf upgrade -y","dnf dist-upgrade -y","dnf clean all","dnf autoremove -y"]
 
 def check_root():
@@ -35,12 +37,12 @@ def update(lst):
                 try:
                         subprocess.run(command, check=True)
                         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        with open(file_path, "a") as f:
+                        with open(update_path, "a") as f:
                                 f.write(f"{timestamp} - Success: {i}\n")
                         print(f"Success: {i}")
                 except subprocess.CalledProcessError:
                         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        with open(file_path, "a") as f:
+                        with open(update_path, "a") as f:
                                 f.write(f"{timestamp} - Failed: {i}\n")
                         print(f"Failed: {i}")
 
@@ -52,12 +54,12 @@ def intall_vim():
         try:
                 subprocess.run(install_vim, check=True)
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                with open(file_path, "a") as f:
+                with open(software_path, "a") as f:
                         f.write(f"{timestamp} - Success: dnf install -y vim\n")
                 print(f"Success: Vim installed")
         except subprocess.CalledProcessError:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                with open(file_path, "a") as f:
+                with open(software_path, "a") as f:
                         f.write(f"{timestamp} - Failed: dnf install -y vim\n")
                 print(f"Failed: Vim installation")
 
