@@ -1,0 +1,50 @@
+import os
+import sys
+import shutil
+import subprocess
+from datetime import datetime
+
+log_path = "/var/log/SysAdmin-Logs"
+software_log_file = "software.log"
+software_path = os.path.join(log_path,software_log_file)
+
+def check_root():
+        if os.getuid() != 0:
+                print("This script must be run as root", file=sys.stderr)
+                sys.exit(1)
+
+def validateLogPath(path):
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except Exception as e:
+            print(f"An error has occured in creating log path: {e}")
+
+def validateLogFile(path):
+    if not os.path.isfile(path):
+        try:
+            with open(path, "w") as f:
+                pass
+        except Exception as e:
+            print(f"An error has occured in creating log file: {e}")
+
+def uninstall_vi():
+        uninstall_vi = ["dnf", "remove", "vim-minimal"]
+        if shutil.which("vi") is None:
+                print("Vi is not an installed package.")
+        try:
+                subprocess.run(uninstall_vi, check=True)
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                with open(software_path, "a") as f:
+                        f.write(f"{timestamp} - Success: dnf remove vim-minimal\n")
+                print(f"Success: Vi removed")
+        except subprocess.CalledProcessError:
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                with open(software_path, "a") as f:
+                        f.write(f"{timestamp} - Failed: dnf remove vim-minimal\n")
+                print(f"Failed: Vi failed to remove")
+
+check_root()
+validateLogPath(log_path)
+validateLogFile(software_path)
+uninstall_vi()
