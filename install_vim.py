@@ -52,14 +52,14 @@ def intall_vim():
         try:
                 subprocess.run(install_vim, check=True)
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        with open(file_path, "a") as f:
-                                f.write(f"{timestamp} - Success: dnf install -y vim\n")
-                        print(f"Success: Vim installed")
+                with open(file_path, "a") as f:
+                        f.write(f"{timestamp} - Success: dnf install -y vim\n")
+                print(f"Success: Vim installed")
         except subprocess.CalledProcessError:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        with open(file_path, "a") as f:
-                                f.write(f"{timestamp} - Failed: dnf install -y vim\n")
-                        print(f"Failed: Vim installation")
+                with open(file_path, "a") as f:
+                        f.write(f"{timestamp} - Failed: dnf install -y vim\n")
+                print(f"Failed: Vim installation")
 
 
 check_root()
