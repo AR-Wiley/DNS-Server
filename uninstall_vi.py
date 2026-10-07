@@ -30,11 +30,11 @@ def validateLogPath(path):
 def validateLogFile(path_lst):
         for i in path_lst:
                 if not os.path.isfile(i):
-                try:
-                    	with open(path, "w") as f:
-                        pass
-                except Exception as e:
-                        print(f"An error has occured in creating log file: {e}")
+                        try:
+                    	        with open(path, "w") as f:
+                                pass
+                        except Exception as e:
+                                print(f"An error has occured in creating log file: {e}")
 
 
 def update(lst):
