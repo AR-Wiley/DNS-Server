@@ -26,6 +26,7 @@ def validateLogPath(path):
         except Exception as e:
             print(f"An error has occured in creating log path: {e}")
 
+
 def validateLogFile(path_lst):
     for i in path_lst:
         if not os.path.isfile(i):
