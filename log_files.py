@@ -28,7 +28,7 @@ def validate_file(path, files):
             print(f"Creating file {i}")
             try:
                 with open(file_path, "x") as f:
-                        f.write(f"{i} ceated")
+                    f.write(f"{i} ceated")
                 print(f"Created: {i}")
             except FileExistsError:
                 print(f"{i} already exits.")
