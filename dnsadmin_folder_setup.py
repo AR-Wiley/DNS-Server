@@ -26,7 +26,6 @@ def dns_admin_dir_validation(path):
         except Exception as e:
             print(f"An error has occured in creating {path}: {e}")
 
-
 def dns_admin_subdir_validation(adminDir, subDir):
     for i in subDir:
         if not os.path.exists(os.path.join(adminDir, i)):
