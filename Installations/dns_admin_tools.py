@@ -5,7 +5,7 @@ import shutil
 from datetime import datetime
 
 admin_tools = ["nmap", "mtr", "rsync", "git"]
-updates = ["dnf update","dnf upgrade -y","dnf dist-upgrade -y","dnf clean all","dnf autoremove -y"]
+updates = ["dnf update -y","dnf upgrade -y","dnf dist-upgrade -y","dnf clean all","dnf autoremove -y"]
 
 log_path = "/var/log/SysAdmin-Logs"
 update_file = "updates.log"
@@ -18,6 +18,9 @@ def check_root():
     if os.getuid() != 0:
         print("This script must be run as root", file=sys.stderr)
         sys.exit(1)
+
+def timestamp():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 def validateLogPath(path):
     if not os.path.exists(path):
@@ -40,36 +43,38 @@ def update(lst):
         command = ["bash", "-c", i]
         try:
             subprocess.run(command, check=True)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(update_path, "a") as f:
-                f.write(f"{timestamp} - Success: {i}\n")
+                f.write(f"{current_time} - Success: {i}\n")
             print(f"Success: {i}")
         except subprocess.CalledProcessError:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(update_path, "a") as f:
-                f.write(f"{timestamp} - Failed: {i}\n")
+                f.write(f"{current_time} - Failed: {i}\n")
             print(f"Failed: {i}")
 
-def install_admin_tools(lst):
-    for i in lst:
+def main():
+    check_root()
+    validateLogPath(log_path)
+    validateLogFile(file_paths)
+    update(updates)
+
+    for i in admin_tools:
         command = ["dnf", "install", "-y", i]
         if shutil.which(i) is not None:
             print(f"{i} is already installed.")
         try:
             subprocess.run(command, check=True)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(software_path, "a") as f:
-                f.write(f"{timestamp} - Success: dnf install -y {i}\n")
+                f.write(f"{current_time} - Success: dnf install -y {i}\n")
             print(f"Success: {i} installed")
         except subprocess.CalledProcessError:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(software_path, "a") as f:
-                f.write(f"{timestamp} - Failed: dnf install -y {i}\n")
+                f.write(f"{current_time} - Failed: dnf install -y {i}\n")
             print(f"Failed: {i} installation")
 
-check_root()
-validateLogPath(log_path)
-validateLogFile(file_paths)
-update(updates)
-install_admin_tools(admin_tools)
+if __name__ == "__main__":
+    main()
 
