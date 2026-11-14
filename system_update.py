@@ -33,7 +33,6 @@ def validateLogFile(path):
             print(f"An error has occured in creating log file: {e}")
 
 def main():
-
     check_root()
     validateLogPath(log_path)
     validateLogFile(file_path)
