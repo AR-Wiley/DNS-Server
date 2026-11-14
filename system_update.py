@@ -37,8 +37,6 @@ def main():
     check_root()
     validateLogPath(log_path)
     validateLogFile(file_path)
-
-    current_time = timestamp()
     
     for i in updates:
         command = ["bash", "-c", i]
