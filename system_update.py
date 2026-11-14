@@ -14,6 +14,9 @@ def check_root():
         print("This script must be run as root", file=sys.stderr)
         sys.exit(1)
 
+def timestamp():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 def validateLogPath(path):        
     if not os.path.exists(path):
         try:
@@ -29,23 +32,30 @@ def validateLogFile(path):
         except Exception as e:
             print(f"An error has occured in creating log file: {e}")
 
-def update(lst):
-    for i in lst:
+def main():
+
+    check_root()
+    validateLogPath(log_path)
+    validateLogFile(file_path)
+
+    current_time = timestamp()
+    
+    for i in updates:
         command = ["bash", "-c", i]
         try:
             subprocess.run(command, check=True)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(file_path, "a") as f:
-                f.write(f"{timestamp} - Success: {i}\n")
+                f.write(f"{current_time} - Success: {i}\n")
             print(f"Success: {i}")
         except subprocess.CalledProcessError:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(file_path, "a") as f:
-                f.write(f"{timestamp} - Failed: {i}\n")
+                f.write(f"{current_time} - Failed: {i}\n")
             print(f"Failed: {i}")
 
+if __name__ == "__main__":
+    main()
 
-check_root()
-validateLogPath(log_path)
-validateLogFile(file_path)
-update(updates)
+
+
