@@ -3,7 +3,7 @@ import sys
 import subprocess
 from datetime import datetime
 
-updates = ["dnf update","dnf upgrade -y","dnf dist-upgrade -y","dnf clean all","dnf autoremove -y"]
+updates = ["dnf update -y","dnf upgrade -y","dnf dist-upgrade -y","dnf clean all","dnf autoremove -y"]
 
 log_path = "/var/log/SysAdmin-Logs"
 log_file = "updates.log"
