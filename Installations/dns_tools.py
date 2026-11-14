@@ -54,7 +54,6 @@ def update(lst):
             print(f"Failed: {i}")
 
 def main():
-
     check_root()
     validateLogPath(log_path)
     validateLogFile(file_paths)
@@ -66,14 +65,14 @@ def main():
             print(f"{i} is already installed.")
         try:
             subprocess.run(command, check=True)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = timestamp()
             with open(software_path, "a") as f:
-                f.write(f"{timestamp} - Success: dnf install -y {i}\n")
+                f.write(f"{current_time} - Success: dnf install -y {i}\n")
             print(f"Success: {i} installed")
         except subprocess.CalledProcessError:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+           current_time = timestamp()
             with open(software_path, "a") as f:
-                f.write(f"{timestamp} - Failed: dnf install -y {i}\n")
+                f.write(f"{current_time} - Failed: dnf install -y {i}\n")
             print(f"Failed: {i} installation")
 
 
